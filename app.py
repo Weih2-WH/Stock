@@ -35,7 +35,7 @@ def select_data():
             result = cursor.fetchone()
     return {"company":company,"date":date,"result":result,"message": "Select success."}, 201
 
-#insert stock information
+#insert stock history
 @app.post("/api/insert")
 def insert_history():
     data = request.get_json()
