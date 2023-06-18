@@ -22,11 +22,6 @@ INSERT_HISTORY_TABLE = "INSERT INTO history (company,opendate,open,high,low,clos
 DELETE_HISTORY_ROW = "DELETE FROM history where company = %s and opendate = %s;"
 SELECT_HISTORY_TABLE = ("""select company,opendate,open,high,low,close,diff,volume from history where company = %s and opendate = date(%s) """)
 
-CREATE_PREDICT_TABLE = """create table if not exists predict(id SERIAL PRIMARY KEY, company TEXT, opendate TIMESTAMP, open real);"""
-INSERT_PREDICT_TABLE = """INSERT INTO predict (company,opendate,open) VALUES (%s,%s,%s);"""
-DELETE_PREDICT_ROW = "DELETE FROM predict where company = %s and opendate = %s;"
-SELECT_HISTORY_ALL_TABLE = ("""select company,opendate,open,high,low,close,diff,volume from history ; """)
-
 
 
 @app.get("/")
