@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 from flask import Flask,request
 from datetime import datetime, timezone
 import yfinance as yf
+import numpy as np
+import datetime
 #read the .env variables
 load_dotenv()
 
@@ -19,6 +21,13 @@ CREATE_HISTORY_TABLE = """create table if not exists history(id SERIAL PRIMARY K
 INSERT_HISTORY_TABLE = "INSERT INTO history (company,opendate,open,high,low,close,diff,volume) VALUES (%s,%s,%s,%s,%s,%s,%s,%s);"
 DELETE_HISTORY_ROW = "DELETE FROM history where company = %s and opendate = %s;"
 SELECT_HISTORY_TABLE = ("""select company,opendate,open,high,low,close,diff,volume from history where company = %s and opendate = date(%s) """)
+
+CREATE_PREDICT_TABLE = """create table if not exists predict(id SERIAL PRIMARY KEY, company TEXT, opendate TIMESTAMP, open real);"""
+INSERT_PREDICT_TABLE = """INSERT INTO predict (company,opendate,open) VALUES (%s,%s,%s);"""
+DELETE_PREDICT_ROW = "DELETE FROM predict where company = %s and opendate = %s;"
+SELECT_HISTORY_ALL_TABLE = ("""select company,opendate,open,high,low,close,diff,volume from history ; """)
+
+
 
 @app.get("/")
 def home():
@@ -56,4 +65,3 @@ def insert_history():
                 cursor.execute(DELETE_HISTORY_ROW,(company,date))
                 cursor.execute(INSERT_HISTORY_TABLE,(company,date,Open,high,low,close,diff,volume))
     return {"message": "5 days data insert success"}, 201
-
