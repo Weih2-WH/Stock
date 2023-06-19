@@ -24,6 +24,6 @@ The objective of this project is to demonstrate the following:
 - Provides an example schema for the PostgreSQL database
 
 ## Requirements
-- Python 3.x
+- Python 3.9.7
 - Libraries specified in the `requirements.txt` file
 
