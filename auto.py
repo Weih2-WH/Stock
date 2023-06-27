@@ -2,7 +2,7 @@ import os
 import psycopg2
 from dotenv import load_dotenv
 from flask import Flask,request
-from datetime import datetime, timezone
+#from datetime import datetime, timezone
 import yfinance as yf
 import joblib
 import time
@@ -16,9 +16,9 @@ company = 'MSFT'
 
 while True:
     # Fetch the latest stock data point
-    latest_data = yf.download(company, start=datetime.date.today(), end=datetime.date.today())
+    latest_data = yf.download("MSFT", start=datetime.date.today(), interval = "1d")
     latest_data = latest_data.tail(1)  # Keep only the latest data point
-
+    print(latest_data)
     # Transform the latest data point 
     transformed_data = [[latest_data.iloc[0]['Open'],latest_data.iloc[0]['High'],latest_data.iloc[0]['Low'],latest_data.iloc[0]['High']-latest_data.iloc[0]['Low'],latest_data.iloc[0]['Volume']]]
 

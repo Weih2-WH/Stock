@@ -5,7 +5,6 @@ from flask import Flask,request
 from datetime import datetime, timezone
 import yfinance as yf
 import numpy as np
-import datetime
 #read the .env variables
 load_dotenv()
 
