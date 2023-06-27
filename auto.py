@@ -16,7 +16,7 @@ company = 'MSFT'
 
 while True:
     # Fetch the latest stock data point
-    latest_data = yf.download("MSFT", start=datetime.date.today(), interval = "1d")
+    latest_data = yf.download(company, start=datetime.date.today(), interval = "1d")
     latest_data = latest_data.tail(1)  # Keep only the latest data point
     print(latest_data)
     # Transform the latest data point 
