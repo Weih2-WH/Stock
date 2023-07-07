@@ -177,6 +177,49 @@ def getPredict():
     return {"date":date,"company":company,"result":result,"message": "Select success."}, 201
 
 
+"""
+    Record client's transaction (buy/sell stock).
+    POST:
+    Parameter:
+            client : int
+            tDate : datetime
+            company : str
+            status : char
+            price : decimal(8,2)
+            volume : int
+"""
+@app.post("/api/insert_transac")
+def insert_transac():
+    data = request.get_json()
+    client  = data['client']
+    tDate  = datetime.strptime(data['tDate'], "%Y-%m-%d %H:%M:%S")
+    company = data["company"]
+    status = data["status"]
+    price  = data["price"]
+    volume  = data["volume"]
+
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(INSERT_TRANSAC_TABLE,(client,tDate,company,status,price,volume))
+    return {"message": "Transaction Successful"}, 201
+
+"""
+    Getting transac
+    GET:
+    Parameter:
+            date : datetime
+            client : int
+"""
+@app.get("/api/getTransac")
+def getTransac():
+    client = request.args.get("client")
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(SELECT_TRANSAC_TABLE,(client))
+            result = cursor.fetchone()
+    return {"client":client,"result":result,"message": "Select success."}, 201
+
+
 if __name__ == '__main__':
      # trigger every minute for testing the func
      # To run on everyday 6pm -> replace the trigger CronTrigger(hour=18)
